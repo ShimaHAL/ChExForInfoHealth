@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "version": "1.0.0",
+    "name": "Information Health Viewer",
+    "description": "an extension for visualizing your information health data",
+    "icons": {
+        "128": "icons/newspaper-solid.png"
+    },
+    "permissions": [
+        "background",
+        "storage",
+        "alarms",
+        "tabs"
+    ],
+    "content_scripts": [{
+        "matches": ["https://*.google.com/*"],
+        "js": [
+            "js/content.js"
+        ]
+    }],
+    "background": {
+        "matches": ["https://*.google.com/*"],
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_icon": "icons/newspaper-solid.png",
+        "default_title": "InfoHealthViewer",
+        "default_popup": "popup.html"
+    }
+}
