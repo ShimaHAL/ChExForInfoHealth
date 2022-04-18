@@ -1,1 +1,12 @@
 This repo is a project for developing chrome extension visualizing your information health.
+
+memo:
+content.jsのみ現在開いているタブに対して容易にアクセスできる
+background.jsは常駐ソフトである
+popup.jsは拡張機能タブにおける操作を管理する
+
+
+contentでデータ収集しstorageに保存する
+backgroundで保存、のちサーバ通信
+popupは可視化に特化
+

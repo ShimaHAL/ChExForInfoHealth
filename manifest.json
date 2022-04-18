@@ -7,19 +7,26 @@
         "128": "icons/newspaper-solid.png"
     },
     "permissions": [
+        "tabs",
         "background",
         "storage",
-        "alarms",
-        "tabs"
+        "alarms"
+    ],
+    "host_permissions":[
+        "https://ja.wikipedia.org/"
     ],
     "content_scripts": [{
-        "matches": ["https://*.google.com/*"],
+        "matches":
+            [
+                "https://news.yahoo.co.jp/*"
+            ],
         "js": [
+            "js/jquery-3.6.0.min.js",
             "js/content.js"
         ]
     }],
     "background": {
-        "matches": ["https://*.google.com/*"],
+        "matches": ["https://news.yahoo.co.jp/*"],
         "service_worker": "background.js"
     },
     "action": {
