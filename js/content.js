@@ -21,9 +21,12 @@ $(function() {
         }
         if(request.action.includes("collectComments")) {
             console.log("collectComments");
-            $(".comment").each(function() {
-                console.log($(this).html());
-            });
+            var commentURL = "https://news.yahoo.co.jp/comment/plugin/v1/full/?&sort=lost_points&order=desc&page=1&type=1"
+            commentURL+="&full_page_url="+$(".news-comment-plugin").data("full-page-url");
+            commentURL += "&topic_id="+$(".news-comment-plugin").data("topic-id");
+            commentURL += "&space_id="+$(".news-comment-plugin").data("space-id");
+            console.log(commentURL);
+            response["commentURL"] = commentURL;
         }
 
         sendResponse(response);

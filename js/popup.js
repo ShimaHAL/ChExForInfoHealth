@@ -5,7 +5,7 @@ $(function() {
         chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
             if(tabs[0].url.match(/articles/)){
                 chrome.tabs.sendMessage(tabs[0].id,
-                    {action: ["getCompanyName", "collectComments"]},
+                    {action: ["getCompanyName"]},
                     (response) => {
                     var companyName = response.CompanyName;
                     $("#companyName").text(companyName);
@@ -52,6 +52,15 @@ $(function() {
             }).fail(()=>{
                 console.log("fail");
             });
+        });
+    });
+
+    $("#collectComments").on("click", function() {
+        console.log("collectComments");
+        chrome.tabs.query({active:true, currentWindow:true}, function(tabs){
+                chrome.tabs.sendMessage(tabs[0].id,{action: ["collectComments"]},(response) => {
+                    $("#commentURL").attr("href", response.commentURL);
+                });
         });
     });
 });
