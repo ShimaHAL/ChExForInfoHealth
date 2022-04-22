@@ -1,6 +1,20 @@
 $(function() {
-    const backendRoot = "http://127.0.0.1:8000/"
+    console.log("popup:open");
+    try {
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {action: "popup_open"}, function(response) {
+                if(response.status == "ON") {
+                    $("#status").text(response.status);
+                    $("#collectInfo").show();
+                    $("#collectComments").show();
+                }
+            });
+        });
+    } catch(err) {
+        console.log(err);
+    }
 
+    const backendRoot = "http://127.0.0.1:8000/"
     $("#collectInfo").on("click", function() {
         chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
             if(tabs[0].url.match(/articles/)){
@@ -35,32 +49,27 @@ $(function() {
         });
     });
 
-    $("#connectBackend").on("click", function() {
+    $("#collectComments").on("click", function() {
         chrome.tabs.query( {active:true, currentWindow:true}, function(tabs){
             console.log(tabs[0].url);
             $.ajax(
                 {
-                    url: backendRoot+"post_url",
+                    url: backendRoot+"collect-comments/",
                     type: "POST",
                     data: {
                         "url": tabs[0].url
                     }
                 }
             ).done((json)=>{
-                console.log(json.message);
-                console.log(json.data);
-            }).fail(()=>{
-                console.log("fail");
-            });
-        });
-    });
-
-    $("#collectComments").on("click", function() {
-        console.log("collectComments");
-        chrome.tabs.query({active:true, currentWindow:true}, function(tabs){
-                chrome.tabs.sendMessage(tabs[0].id,{action: ["collectComments"]},(response) => {
-                    $("#commentURL").attr("href", response.commentURL);
+                var comments = "";
+                json.data.forEach((info)=>{
+                    comments += info.comment + "<br>";
+                    comments += "Good:" + info.good+", Bad:" + info.bad + "<br> <hr>";
                 });
+                $("#comments").html(comments);
+            }).fail(()=>{
+                $("#comments").text("failed. try again.");
+            });
         });
     });
 });

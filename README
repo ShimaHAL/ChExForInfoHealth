@@ -6,7 +6,8 @@ background.jsは常駐ソフトである
 popup.jsは拡張機能タブにおける操作を管理する
 
 
-contentでデータ収集しstorageに保存する
-backgroundで保存、のちサーバ通信
-popupは可視化に特化
+contentでtabの情報を取り出せるが、外部通信は不可
+backgroundでサーバ通信
+popupはtabの情報を取り出す以外の代替はできるが、開かないと動かない
 
+TODO: messageの利用からportベースに切り替える？
