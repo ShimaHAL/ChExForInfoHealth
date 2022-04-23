@@ -3,7 +3,7 @@ $(function() {
     try {
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {action: "popup_open"}, function(response) {
-                if(response.status == "ON") {
+                if(response.status === "ON") {
                     $("#status").text(response.status);
                     $("#collectInfo").show();
                     $("#collectComments").show();
